@@ -17,12 +17,19 @@ signature: v1.eyJzdWIiOiI0MzQ3IiwiYXVkIjoiY2hhbGxlbmdlOndoYXQtaXQtc2hvd3MiLCJpYX
   const labels = { parser: 'shared parser reads month first', hint: 'booking-v3 form hint', shift: 'date moves one day' };
 </script>
 
-[#4471](/kb/incidents/4471) is marked known: one issue, one fix queued. Read report by report, it holds
-three problems. The queued parser fix closes only the first.
+[#4471](/kb/incidents/4471) was marked known: one issue, one fix queued. Read report by report, it holds
+three problems. Engineering closed #4471 on 5 October; that settled two of them, not the third.
 
 <Callout kind="warn">
-Not one issue. Three, each with its own ticket now. Fixing the parser leaves the other two open.
+Still open: <code>shift</code>, dates moving one day ([#3]({issues.shift})). Neither the parser fix nor
+retiring booking-v3 touches it. Reports like it still belong on #3, not on #4471.
 </Callout>
+
+## Where each one stands
+
+- **`parser`**: fixed by engineering, `fix(dates): parse dd/mm for eu locales`. [#1]({issues.parser}) closed.
+- **`hint`**: won't fix; the booking-v3 form is retired. [#2]({issues.hint}) closed as not planned.
+- **`shift`**: open. No fix yet. [#3]({issues.shift}).
 
 ## What #4471 holds
 
@@ -55,7 +62,8 @@ problem on many reports (see the note under the table).
 
 - Before marking a big ticket known, run its reports through `causeOf`
   ([triage](/kb/triage/dedupe)) and the one-day notes. More than one problem: split it.
-- Keep #4471 for the parser problem only and point the other reports to [#2]({issues.hint}) and [#3]({issues.shift}).
+- #4471 is closed, so new one-day reports go to [#3]({issues.shift}). A date swapped on a day-first
+  tenant after 5 October is a new problem: the parser fix should have stopped those.
 - Counts on this page are the desk's own view: built from `reports-4471.json` at render time with
   `causes.ts`, the same way as the cause table on [#4471](/kb/incidents/4471).
 
