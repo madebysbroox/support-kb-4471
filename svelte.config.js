@@ -12,6 +12,8 @@ export default {
   kit: {
     adapter: adapter(),
     alias: { '#lib': 'src/lib' },
+    // Absolute asset paths, so a page still loads when its URL ends in a slash.
+    paths: { relative: false },
     prerender: { entries: ['/kb'], handleHttpError: 'warn' },
   },
 };
