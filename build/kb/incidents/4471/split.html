@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="../../../_app/immutable/entry/start.DsIfLDaI.js" rel="modulepreload">
+		<link href="../../../_app/immutable/chunks/ll0Je3wW.js" rel="modulepreload">
+		<link href="../../../_app/immutable/chunks/DgZ7eMIM.js" rel="modulepreload">
+		<link href="../../../_app/immutable/entry/app.B7f9nv8W.js" rel="modulepreload">
+		<link href="../../../_app/immutable/chunks/xihTtKlq.js" rel="modulepreload">
+		<link href="../../../_app/immutable/nodes/0.FtfD6PNt.js" rel="modulepreload">
+		<link href="../../../_app/immutable/nodes/5.C3tNv84l.js" rel="modulepreload">
+		<link href="../../../_app/immutable/chunks/2f0Dz4FM.js" rel="modulepreload">
+		<link href="../../../_app/immutable/chunks/BUobAEgd.js" rel="modulepreload">
+		<link href="../../../_app/immutable/chunks/CVBzP17p.js" rel="modulepreload">
+		<link href="../../../_app/immutable/chunks/BlNrTger.js" rel="modulepreload">
+		<!--e2jw2j--><!----><title>#4471 holds three problems, not one · support kb</title>
+		<link href="../../../_app/immutable/assets/runbook.COyw0cbZ.css" rel="stylesheet">
+		<link href="../../../_app/immutable/assets/Callout.AbLv9dM_.css" rel="stylesheet">
+		<link href="../../../_app/immutable/assets/_page.89jPLODK.css" rel="stylesheet">
+  </head>
+  <body>
+    <div style="display: contents"><!--[--><!--[0--><!--[--><!--[--><div class="kb svelte-e2jw2j"><header><a class="crumb svelte-e2jw2j" href="/kb">support desk · kb</a> <h1 class="svelte-e2jw2j">#4471 holds three problems, not one</h1> <p class="meta svelte-e2jw2j"><span>owner <b>support desk</b></span> <span class="status open svelte-e2jw2j">open</span> <span class="svelte-e2jw2j">reviewed 2026-10-28 · 0 days ago</span></p></header> <!--[-1--><!--]--> <main><p><a href="/kb/incidents/4471">#4471</a> is marked known: one issue, one fix queued. Read report by report, it holds
+three problems. The queued parser fix closes only the first.</p> <aside class="warn svelte-17bri61"><!---->Not one issue. Three, each with its own ticket now. Fixing the parser leaves the other two open.<!----></aside><!----> <h2>What #4471 holds</h2> <p class="sum svelte-xskqqx"><strong>412</strong> reports in #4471 · <strong>3</strong> problems</p> <table><thead><tr><th>problem</th><th>reports</th><th>tenants</th><th>seen</th><th>ticket</th></tr></thead><tbody><!--[--><tr class="svelte-xskqqx"><td class="svelte-xskqqx"><code>parser</code> shared parser reads month first</td><td class="svelte-xskqqx">374</td><td class="svelte-xskqqx">11</td><td class="svelte-xskqqx">2026-04-01 → 2026-10-04</td><td class="svelte-xskqqx"><!--[0--><a href="https://github.com/madebysbroox/support-kb-4471/issues/1">#1</a><!--]--></td></tr><tr class="svelte-xskqqx"><td class="svelte-xskqqx"><code>hint</code> booking-v3 form hint</td><td class="svelte-xskqqx">33</td><td class="svelte-xskqqx">3</td><td class="svelte-xskqqx">2026-04-17 → 2026-09-22</td><td class="svelte-xskqqx"><!--[0--><a href="https://github.com/madebysbroox/support-kb-4471/issues/2">#2</a><!--]--></td></tr><tr class="svelte-xskqqx"><td class="svelte-xskqqx"><code>shift</code> date moves one day</td><td class="svelte-xskqqx">5</td><td class="svelte-xskqqx">5</td><td class="svelte-xskqqx">2026-04-02 → 2026-10-04</td><td class="svelte-xskqqx"><!--[0--><a href="https://github.com/madebysbroox/support-kb-4471/issues/3">#3</a><!--]--></td></tr><!--]--></tbody></table> <p class="note svelte-xskqqx">The export has 427 rows for #4471; 15 are the same report twice, so they are
+  counted once. Intake's tag disagrees with the problem on 38 of the parser and hint reports.</p><!----> <h2>The three problems</h2> <p><strong><code>parser</code>: the shared parser reads dates month first.</strong> Every tenant on file writes the day first, so
+any day of 12 or less comes out swapped: 7 April becomes 4 July. This is what #4471 says it is, and it is
+most of the reports. Ticket: <a href="https://github.com/madebysbroox/support-kb-4471/issues/1">#1</a>.</p> <p><strong><code>hint</code>: booking-v3’s form hints <code>MM/DD/YYYY</code> and reads the date day first.</strong> People type what the hint
+tells them, and the form reads it the tenant’s way. It looks like the parser bug, but it only comes in
+through the form, only from tenants on booking-v3, and the parser fix won’t touch it. The desk’s own
+cause table already marks it “not this ticket — no ticket of its own”. Ticket: <a href="https://github.com/madebysbroox/support-kb-4471/issues/2">#2</a>.</p> <p><strong><code>shift</code>: dates move one day, not a swap.</strong> Tuesday shows as Monday; the same meeting lands on different
+days in Lisbon and Toronto; an invite arrives before the booking was made. That is a date going through
+a time zone and losing a day. The desk read these as one-day moves (<code>desk-notes.json</code>) but left them
+filed under the parser. Ticket: <a href="https://github.com/madebysbroox/support-kb-4471/issues/3">#3</a>.</p> <h2>Why they were merged</h2> <p><a href="/kb/decisions/0001-dedupe-by-subject">Decision 0001</a> merges on subject line, and the desk merged further
+by hand: #4471 holds a dozen different subjects. The subject says <em>the date is wrong</em>; it can’t say <em>why</em>.
+Intake’s tag doesn’t help either: it is a guess from the reporter’s browser, and it disagrees with the
+problem on many reports (see the note under the table).</p> <h2>For the desk</h2> <ul><li>Before marking a big ticket known, run its reports through <code>causeOf</code> (<a href="/kb/triage/dedupe">triage</a>) and the one-day notes. More than one problem: split it.</li> <li>Keep #4471 for the parser problem only and point the other reports to <a href="https://github.com/madebysbroox/support-kb-4471/issues/2">#2</a> and <a href="https://github.com/madebysbroox/support-kb-4471/issues/3">#3</a>.</li> <li>Counts on this page are built from <code>reports-4471.json</code> at render time by <code>src/lib/kb/split.ts</code>.</li></ul> <!--[0--><p class="stamp svelte-1280m42">desk ref <b class="svelte-1280m42">DR-N7KZ-VBPT</b></p><!--]--><!----><!----></main> <footer class="svelte-e2jw2j">Pages are written by people. Tables and charts are built from data at render time.</footer></div><!--]--><!----><!--]--><!--]--> <!--[-1--><!--]--><!--]-->
+			
+			<script>
+				{
+					__sveltekit_1sh6dh4 = {
+						base: new URL("../../..", location).pathname.slice(0, -1)
+					};
+
+					const element = document.currentScript.parentElement;
+
+					Promise.all([
+						import("../../../_app/immutable/entry/start.DsIfLDaI.js"),
+						import("../../../_app/immutable/entry/app.B7f9nv8W.js")
+					]).then(([kit, app]) => {
+						kit.start(app, element, {
+							node_ids: [0, 5],
+							data: [null,null],
+							form: null,
+							error: null
+						});
+					});
+				}
+			</script>
+		</div>
+  </body>
+</html>

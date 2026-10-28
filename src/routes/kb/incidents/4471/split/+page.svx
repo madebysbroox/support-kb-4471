@@ -1,0 +1,61 @@
+---
+layout: runbook
+title: '#4471 holds three problems, not one'
+owner: support desk
+status: open
+reviewed: 2026-10-28
+signature: v1.eyJzdWIiOiI0MzQ3IiwiYXVkIjoiY2hhbGxlbmdlOndoYXQtaXQtc2hvd3MiLCJpYXQiOjE3OTMyMDc2MDksImV4cCI6MTc5MzI5NDAwOX0.mnjGyXyzI351P0eLRwZ4SoENJlpfQam3sG3QDpEDV1Y
+---
+
+<script>
+  import SplitTable from '#lib/kb/SplitTable.svelte';
+  import RenderStamp from '#lib/kb/RenderStamp.svelte';
+  import Callout from '#lib/kb/Callout.svelte';
+
+  const repo = 'https://github.com/madebysbroox/support-kb-4471/issues';
+  const issues = { parser: `${repo}/1`, hint: `${repo}/2`, shift: `${repo}/3` };
+  const labels = { parser: 'shared parser reads month first', hint: 'booking-v3 form hint', shift: 'date moves one day' };
+</script>
+
+[#4471](/kb/incidents/4471) is marked known: one issue, one fix queued. Read report by report, it holds
+three problems. The queued parser fix closes only the first.
+
+<Callout kind="warn">
+Not one issue. Three, each with its own ticket now. Fixing the parser leaves the other two open.
+</Callout>
+
+## What #4471 holds
+
+<SplitTable ticket={4471} {issues} {labels} />
+
+## The three problems
+
+**`parser`: the shared parser reads dates month first.** Every tenant on file writes the day first, so
+any day of 12 or less comes out swapped: 7 April becomes 4 July. This is what #4471 says it is, and it is
+most of the reports. Ticket: [#1]({issues.parser}).
+
+**`hint`: booking-v3's form hints `MM/DD/YYYY` and reads the date day first.** People type what the hint
+tells them, and the form reads it the tenant's way. It looks like the parser bug, but it only comes in
+through the form, only from tenants on booking-v3, and the parser fix won't touch it. The desk's own
+cause table already marks it "not this ticket — no ticket of its own". Ticket: [#2]({issues.hint}).
+
+**`shift`: dates move one day, not a swap.** Tuesday shows as Monday; the same meeting lands on different
+days in Lisbon and Toronto; an invite arrives before the booking was made. That is a date going through
+a time zone and losing a day. The desk read these as one-day moves (`desk-notes.json`) but left them
+filed under the parser. Ticket: [#3]({issues.shift}).
+
+## Why they were merged
+
+[Decision 0001](/kb/decisions/0001-dedupe-by-subject) merges on subject line, and the desk merged further
+by hand: #4471 holds a dozen different subjects. The subject says *the date is wrong*; it can't say *why*.
+Intake's tag doesn't help either: it is a guess from the reporter's browser, and it disagrees with the
+problem on many reports (see the note under the table).
+
+## For the desk
+
+- Before marking a big ticket known, run its reports through `causeOf`
+  ([triage](/kb/triage/dedupe)) and the one-day notes. More than one problem: split it.
+- Keep #4471 for the parser problem only and point the other reports to [#2]({issues.hint}) and [#3]({issues.shift}).
+- Counts on this page are built from `reports-4471.json` at render time by `src/lib/kb/split.ts`.
+
+<RenderStamp {signature} />
