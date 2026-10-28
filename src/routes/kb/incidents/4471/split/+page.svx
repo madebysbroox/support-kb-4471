@@ -56,6 +56,7 @@ problem on many reports (see the note under the table).
 - Before marking a big ticket known, run its reports through `causeOf`
   ([triage](/kb/triage/dedupe)) and the one-day notes. More than one problem: split it.
 - Keep #4471 for the parser problem only and point the other reports to [#2]({issues.hint}) and [#3]({issues.shift}).
-- Counts on this page are built from `reports-4471.json` at render time by `src/lib/kb/split.ts`.
+- Counts on this page are the desk's own view: built from `reports-4471.json` at render time with
+  `causes.ts`, the same way as the cause table on [#4471](/kb/incidents/4471).
 
 <RenderStamp {signature} />
